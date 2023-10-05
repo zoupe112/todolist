@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.body {
+    font-family: font-mono;
+}
+
+.flex-container {
+    display: flex;
+    background-color: none;
+    align-items: center;
+    justify-content: center;
+    margin: 300px;
+    font-weight: bold;
+    font-size: 36px;
+}
+
+.flex-container>div {
+    background-color: none;
+    text-align: center;
+    width: 450;
+    height: 400;
+    font-weight: bold;
+    font-size: 36px;
+}
+
+.label {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 24;
+    height: 400;
+    font-weight: bold;
+    color: aliceblue;
+}
+
+.button {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 24;
+    height: 400;
+    font-weight: bold;
+    font-size: 36px;
+    border-radius: 50px;
+    background-color: blue;
+}
+
+.input {
+    font-weight: bold;
+    font-size: 36px;
+    font-size: 24;
+    color: 'F2F2F2';
+    text-align: center;
+}
