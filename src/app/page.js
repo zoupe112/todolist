@@ -18,8 +18,15 @@ export default function Home() {
 
 
 
+  useEffect(() => {
+    bom()
+  }, []);
 
 
+  const bom = () => {
+    console.log('bom')
+
+  }
   const submit = () => {
 
     console.log('nameeee', name)
@@ -47,40 +54,47 @@ export default function Home() {
 
   return (
     <>
-      <body className='body' style={{ backgroundImage: "url(/background-react.png)", backgroundRepeat: 'no-repeat', backgroundSize: 'cover', fontweight: 'bold' }
+      <body className='body' style={{ backgroundImage: "url(/background-react.png)", backgroundRepeat: 'no-repeat', backgroundSize: 'cover', fontFamily: 'inherit' }
       }>
         <div className='flex-container'>
-          <div>
-            <input type="text" name="name" className='input'
-              value={name} placeholder='Username'
-              onChange={(e) => {
-                console.log(e.target.value)
-                let input = e.target.value
-                setName(input)
-              }}
-            />
-            {nameError == null ? null : nameError}
+          <div style={{ backgroundColor: 'rgba(255,255,255,0.2)', borderRadius: '50px', padding: '50px', backdropFilter: 'blur(5px)' }}>
             <div>
+              <h1 style={{ fontSize: '48px', color: 'white', animation: 'ease-in-out' }}>Login</h1>
               <br></br>
-              <input type='text' name="Password" className='input'
-                placeholder='Password'
-                value={password}
-                onChange={(e) => {
-                  let input = e.target.value
-                  setPassword(input)
-                }}
-              />
-            </div>
-
-            <div>
-              <br></br>
-              {passwordError == null ? null : passwordError}
-              <button onClick={() => submit()} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full'>save</button>&nbsp;&nbsp;&nbsp;
-              <button onClick={() => router.push('/page2')} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full' >page 2</button>
+              <div>
+                <input type="text" name="name" className='input'
+                  value={name} placeholder='Username'
+                  onChange={(e) => {
+                    console.log(e.target.value)
+                    let input = e.target.value
+                    setName(input)
+                  }}
+                  style={{ outline: 'none' }}
+                />
+                {nameError == null ? null : nameError}
+                <div>
+                  <br></br>
+                  <input type='text' name="Password" className='input'
+                    placeholder='Password'
+                    value={password}
+                    onChange={(e) => {
+                      let input = e.target.value
+                      setPassword(input)
+                    }}
+                    style={{ outline: 'none' }}
+                  />
+                </div>
+              </div>
+              <div>
+                <br></br>
+                {passwordError == null ? null : passwordError}
+                <button onClick={() => submit()} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full' style={{ textAlign: '' }}>save</button><br></br><br></br>
+                <button onClick={() => router.push('/page2')} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full' >page 2</button>
+              </div>
             </div>
           </div>
         </div>
-      </body>
+      </body >
     </>
   )
 }
