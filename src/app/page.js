@@ -33,7 +33,7 @@ export default function Home() {
     console.log('password', password)
 
 
-    //todo 
+
 
     if (name == null) {
       alert('กรุณากรอกข้อมูลให้ครบถ้วน');
