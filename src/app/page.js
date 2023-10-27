@@ -3,8 +3,9 @@ import { Main } from 'next/document'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
-import { useState, useEffect, Fragment } from 'react'
+import { useState, useEffect, Fragment, ReactDOM } from 'react'
 import "./Main.css";
+import Pass from './components/name_password'
 
 export default function Home() {
 
@@ -15,7 +16,6 @@ export default function Home() {
 
   const [nameError, setNameError] = useState(null)
   const [passwordError, setPasswordError] = useState(null)
-
 
 
   useEffect(() => {
@@ -44,22 +44,16 @@ export default function Home() {
       alert('กรุณากรอกข้อมูลให้ครบถ้วน');
       return
     }
-
-    router.push('/page2?Password=' + password)
-
+    router.push('/page2?name=' + name + '&Password=' + password)
   }
-
-
 
 
   return (
     <>
-      <div className='bg-blue-500 flex justify-center flex items-center bg-gradient-to-r from-cyan-500 to-blue-500' style={{ fontFamily: 'inherit', height: '100vh', textAlign: 'center', fontWeight: 'bold' }
-      }>
-        <div style={{ backgroundColor: 'rgba(255,255,255,0.2)', borderRadius: '50px', padding: '50px', backdropFilter: 'blur(5px)' }}>
-          <h1 style={{ fontSize: '48px', color: 'white' }}>Login</h1>
-          <br></br>
-          <input class type="text" name="name" className='input rounded-md'
+      <div className='bg-blue-500 flex justify-center items-center bg-gradient-to-r from-cyan-500 to-blue-500 font-sans font-bold text-center h-screen'>
+        <div className='flex flex-col rounded-3xl p-14 backdrop-blur-sm bg-white/20' >
+          <h1 className='text-5xl text-white' >Login</h1>
+          <input type="text" name="name" className='input rounded-md my-5'
             value={name} placeholder='Username'
             onChange={(e) => {
               console.log(e.target.value)
@@ -69,7 +63,7 @@ export default function Home() {
             style={{ outline: 'none' }}
           />
           {nameError == null ? null : nameError}
-          <br></br><br></br>
+
           <input type='text' name="Password" className='input rounded-md'
             placeholder='Password'
             value={password}
@@ -79,9 +73,8 @@ export default function Home() {
             }}
             style={{ outline: 'none' }}
           />
-          <br></br><br></br>
           {passwordError == null ? null : passwordError}
-          <button onClick={() => submit()} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 w-full rounded-md'>Login</button><br></br><br></br>
+          <button onClick={() => submit()} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 w-full rounded-md my-5'>Login</button>
         </div>
       </div>
     </>
