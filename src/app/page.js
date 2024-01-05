@@ -26,6 +26,15 @@ export default function Home() {
   const bom = () => {
     console.log('bom')
 
+    localStorage.setItem("bom", "1234")
+    localStorage.setItem("token", "1234")
+
+
+    localStorage.setItem("bom22", "1234567")
+
+
+
+
   }
   const submit = () => {
 

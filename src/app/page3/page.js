@@ -17,31 +17,20 @@ function App() {
         console.log('password >>>', password)
         console.log(bom3)
         console.log('Username >>>', name)
+
+        let token = localStorage.getItem("bom")
+
+        localStorage.removeItem("bom22")
+        localStorage.clear()
+
     })
 
 
-    const [list, setList] = useState([]);
-    const [input, setInput] = useState("");
-    const [updateindex, setUpdateindex] = useState(null);
-    const [updateinput, setUpdateinput] = useState(null);
+    const [task, setTask] = useState([]);
+    const [addtodo, setAddtodo] = useState(null);
+    const [updateid, setUpdateid] = useState(null);
+    const [updatetask, setUpdatetask] = useState(null);
     const [listuser, setListuser] = useState([]);
-    function bom() {
-
-
-    }
-
-    const bom2 = () => {
-
-        var requestOptions = {
-            method: 'GET',
-            redirect: 'follow'
-        };
-
-        fetch("https://653aa7712e42fd0d54d4475a.mockapi.io/api/user", requestOptions)
-            .then(response => response.text())
-            .then(result => setListuser([result]))
-            .catch(error => console.log('error', error));
-    }
 
     const bom22 = async () => {
 
@@ -73,13 +62,10 @@ function App() {
 
     }
 
-    const bom3 = () => "bom3"
 
 
-
-
-    const addTodo = (x) => {
-        if (input == "") {
+    const addTask = (x) => {
+        if (addtodo == "") {
             alert('Add text');
             return
         }
@@ -88,41 +74,41 @@ function App() {
             todo: x,
         };
         console.log("bom", newTodo)
-        console.log("bom2", ...list)
+        console.log("bom2", ...task)
         // add the todo to the list
-        setList([...list, newTodo]);
+        setTask([...task, newTodo]);
         // clear input box
-        setInput("");
+        setAddtodo("");
     };
 
-    const deleteTodo = (id) => {
+    const deleteTask = (id) => {
         // Filter out todo with the id
-        const newList = list.filter((todo) => todo.id !== id);
+        const newList = task.filter((todo) => todo.id !== id);
 
-        setList(newList);
+        setTask(newList);
     };
 
-    const updatetodo = (todo, index) => {
-        setUpdateinput(todo)
-        setUpdateindex(index);
+    const editTask = (todo, index) => {
+        setUpdatetask(todo)
+        setUpdateid(index);
     };
 
-    const savetodo = (id) => {
-        if (updateinput == "") {
+    const saveTask = (id) => {
+        if (updatetask == "") {
             alert('Add text');
             return
         }
-        const newList = [...list]
+        const newList = [...task]
 
         newList.map((obj) => {
             if (obj.id === id) {
-                obj.todo = updateinput
+                obj.todo = updatetask
             }
         })
 
         console.log('>>>>', newList)
-        setList(newList)
-        setUpdateindex(null)
+        setTask(newList)
+        setUpdateid(null)
 
 
     }
@@ -136,12 +122,12 @@ function App() {
                 <div className="bg-white px-10 py-5 rounded-xl m-2.5">
                     <input
                         type="text"
-                        value={input}
-                        onChange={(e) => setInput(e.target.value)
+                        value={addtodo}
+                        onChange={(e) => setAddtodo(e.target.value)
                         } placeholder="Add todo"
                         className="h-10 w-[500px] outline-none border-b border-b-stone-300 mr-10 w-[500px]"
                     />
-                    <button onClick={() => addTodo(input)} className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 transition ease-in-out delay-150 bg-blue-500 hover:-translate-y-1 hover:scale-110 duration-300 rounded-xl outline-none mr-5">Add</button>
+                    <button onClick={() => addTask(addtodo)} className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 transition ease-in-out delay-150 bg-blue-500 hover:-translate-y-1 hover:scale-110 duration-300 rounded-xl outline-none mr-5">Add</button>
                     <button onClick={() => bom2()} className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 transition ease-in-out delay-150 bg-blue-500 hover:-translate-y-1 hover:scale-110 duration-300 rounded-xl outline-none mr-5">GET</button>
                 </div>
                 <br></br>
@@ -150,24 +136,24 @@ function App() {
                         {listuser.map((result) => (
                             <div>{result}</div>
                         ))}
-                        {list.map((obj, index) => (
+                        {task.map((obj, index) => (
                             <li key={obj.id} className="bg-white p-[10px] m-[10px] rounded-xl">
-                                {updateindex === index ?
+                                {updateid === index ?
                                     <div className="flex justify-between pl-7 items-center">
                                         <input
                                             type="text"
-                                            value={updateinput}
-                                            onChange={(e) => setUpdateinput(e.target.value)}
+                                            value={updatetask}
+                                            onChange={(e) => setUpdatetask(e.target.value)}
                                             className="outline-none flex alignitems-center border-b border-b-stone-300 w-[81%]" />
-                                        <button onClick={() => savetodo(obj.id)}><MdSaveAs size='2em' className="inline-block text-white bg-green-500 p-[5px] rounded-xl mr-4" ></MdSaveAs>
+                                        <button onClick={() => saveTask(obj.id)}><MdSaveAs size='2em' className="inline-block text-white bg-green-500 p-[5px] rounded-xl mr-4" ></MdSaveAs>
                                         </button>
                                     </div>
                                     : <div className="flex justify-between pl-7 items-center">
                                         <div className="outline-none flex alignitems-center border-b border-b-stone-300 w-[81%]">{obj.todo}</div>
                                         <div>
-                                            <button onClick={() => deleteTodo(obj.id)}>&nbsp;&nbsp;<AiFillDelete size='2em' className="inline-block text-white bg-red-600 p-[5px] rounded-xl mr-5"></AiFillDelete>
+                                            <button onClick={() => deleteTask(obj.id)}>&nbsp;&nbsp;<AiFillDelete size='2em' className="inline-block text-white bg-red-600 p-[5px] rounded-xl mr-5"></AiFillDelete>
                                             </button>
-                                            <button onClick={() => updatetodo(obj.todo, index)}><FaRegEdit size='2em' className="bg-blue-500 inline-block text-white p-[5px] rounded-xl mr-4"></FaRegEdit>
+                                            <button onClick={() => editTask(obj.todo, index)}><FaRegEdit size='2em' className="bg-blue-500 inline-block text-white p-[5px] rounded-xl mr-4"></FaRegEdit>
                                             </button>
                                         </div>
                                     </div>}
