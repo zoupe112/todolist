@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { useState, useEffect, Fragment, ReactDOM } from 'react'
 import "./Main.css";
+import { FaRegUserCircle } from "react-icons/fa";
 import Pass from './components/name_password'
 
 export default function Home() {
@@ -56,6 +57,16 @@ export default function Home() {
     router.push('/page2?name=' + name + '&Password=' + password)
   }
 
+  const popup = () => {
+    Register.style.display = 'block'
+    document.getElementsByTagName('body')[0].classList.add('overflow-y-hidden')
+
+  }
+  const closepopup = () => {
+    Register.style.display = 'none'
+    document.getElementsByTagName('body')[0].classList.remove('overflow-y-hidden')
+  }
+
 
   return (
     <>
@@ -73,7 +84,7 @@ export default function Home() {
           />
           {nameError == null ? null : nameError}
 
-          <input type='text' name="Password" className='input rounded-md'
+          <input type='password' name="Password" className='input rounded-md'
             placeholder='Password'
             value={password}
             onChange={(e) => {
@@ -84,6 +95,37 @@ export default function Home() {
           />
           {passwordError == null ? null : passwordError}
           <button onClick={() => submit()} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 w-full rounded-md my-5'>Login</button>
+          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 w-full rounded-md transition" onClick={() => popup()}>
+            Register
+          </button>
+        </div>
+        <div id="Register" class="fixed hidden z-50 inset-0 bg-gray-900 bg-opacity-60 overflow-y-auto h-full w-full px-4 ">
+          <div class="relative top-40 mx-auto shadow-xl rounded-md bg-white max-w-md">
+
+            <div class="flex justify-end p-2">
+              <button onclick="closeModal('modelConfirm')" type="button"
+                class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center">
+                <svg onClick={() => closepopup()} class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd"
+                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                    clip-rule="evenodd"></path>
+                </svg>
+              </button>
+            </div>
+
+            <div class="p-6 pt-0 text-center">
+              <FaRegUserCircle class="w-20 h-20 text-sky-500 mx-auto" />
+              <h3 class="text-xl font-normal text-gray-500 mt-5 mb-6">Register</h3>
+              <input id="username" type="text" placeholder="Username" class=" my-3 text-center shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+              <input id="password" type="password" placeholder="Password" class=" text-center shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+              <br></br>
+              <button onClick={() => closepopup()}
+                class=" my-3 text-white bg-green-600 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-base inline-flex items-center px-3 py-2.5 text-center mr-2">
+                Sign up
+              </button>
+            </div>
+
+          </div>
         </div>
       </div>
     </>

@@ -15,7 +15,7 @@ function App() {
 
     useEffect(() => {
         console.log('password >>>', password)
-        console.log(bom3)
+        /* console.log(bom3) */
         console.log('Username >>>', name)
 
         let token = localStorage.getItem("bom")
