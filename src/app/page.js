@@ -18,26 +18,7 @@ export default function Home() {
   const [nameError, setNameError] = useState(null)
   const [passwordError, setPasswordError] = useState(null)
 
-
-  useEffect(() => {
-    bom()
-  }, []);
-
-
-  const bom = () => {
-    console.log('bom')
-
-    localStorage.setItem("bom", "1234")
-    localStorage.setItem("token", "1234")
-
-
-    localStorage.setItem("bom22", "1234567")
-
-
-
-
-  }
-  const submit = () => {
+  const Submitlogin = () => {
 
     console.log('nameeee', name)
     console.log('password', password)
@@ -54,7 +35,75 @@ export default function Home() {
       alert('กรุณากรอกข้อมูลให้ครบถ้วน');
       return
     }
-    router.push('/page2?name=' + name + '&Password=' + password)
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    var raw = JSON.stringify({
+      "email": name,
+      "password": password
+    });
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow'
+    };
+
+    fetch("https://localhost:7115/account/User/SignIn", requestOptions)
+      .then(response => response.json())
+      .then(result => {
+        console.log(result)
+        if (result.status === 'success') {
+          alert('Login success')
+          localStorage.setItem("token", result.data);
+          router.push('/page2?name=' + name + '&Password=' + password)
+        }
+        else {
+          alert('Login failed')
+        }
+      })
+    /* .catch(error => console.log('error', error)); */
+  }
+
+  const Submitregis = () => {
+    if (name == null) {
+      alert('กรุณากรอกข้อมูลให้ครบถ้วน');
+      return
+    }
+
+    if (password == null) {
+      alert('กรุณากรอกข้อมูลให้ครบถ้วน');
+      return
+    }
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    var raw = JSON.stringify({
+      "email": name,
+      "password": password,
+      "role": 10
+    });
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow'
+    };
+
+    fetch("https://localhost:7115/account/User/Register", requestOptions)
+      .then(response => response.json())
+      .then(result => {
+        console.log(result)
+        if (result.status === 'success') {
+          alert('Regis success')
+          closepopup()
+        }
+        else {
+          alert('Regis failed')
+        }
+      })
   }
 
   const popup = () => {
@@ -62,6 +111,7 @@ export default function Home() {
     document.getElementsByTagName('body')[0].classList.add('overflow-y-hidden')
 
   }
+
   const closepopup = () => {
     Register.style.display = 'none'
     document.getElementsByTagName('body')[0].classList.remove('overflow-y-hidden')
@@ -83,7 +133,7 @@ export default function Home() {
             style={{ outline: 'none' }}
           />
           {nameError == null ? null : nameError}
-
+          <br></br>
           <input type='password' name="Password" className='input rounded-md'
             placeholder='Password'
             value={password}
@@ -94,7 +144,7 @@ export default function Home() {
             style={{ outline: 'none' }}
           />
           {passwordError == null ? null : passwordError}
-          <button onClick={() => submit()} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 w-full rounded-md my-5'>Login</button>
+          <button onClick={() => Submitlogin()} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 w-full rounded-md my-5'>Login</button>
           <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 w-full rounded-md transition" onClick={() => popup()}>
             Register
           </button>
@@ -116,10 +166,21 @@ export default function Home() {
             <div class="p-6 pt-0 text-center">
               <FaRegUserCircle class="w-20 h-20 text-sky-500 mx-auto" />
               <h3 class="text-xl font-normal text-gray-500 mt-5 mb-6">Register</h3>
-              <input id="username" type="text" placeholder="Username" class=" my-3 text-center shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
-              <input id="password" type="password" placeholder="Password" class=" text-center shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+              <input id="username" type="text" placeholder="Username" class=" my-3 text-center shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                value={name}
+                onChange={(e) => {
+                  console.log(e.target.value)
+                  let input = e.target.value
+                  setName(input)
+                }} />
+              <input id="password" type="password" placeholder="Password" class=" text-center shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                value={password}
+                onChange={(e) => {
+                  let input = e.target.value
+                  setPassword(input)
+                }} />
               <br></br>
-              <button onClick={() => closepopup()}
+              <button onClick={() => Submitregis()}
                 class=" my-3 text-white bg-green-600 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-base inline-flex items-center px-3 py-2.5 text-center mr-2">
                 Sign up
               </button>
